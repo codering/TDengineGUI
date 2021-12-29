@@ -468,7 +468,11 @@
                 </el-input>
                 <div class="resultPlace">
                   <!-- <el-input :rows='1000' type="textarea" placeholder="运行结果" v-model="consoleResult" :disabled="true"></el-input> -->
-                  <div  style="height:100%;overflow-y:auto" class="resultPlaceTitle">{{consoleResult}}</div>
+                  <div  style="height:100%;overflow-y:auto" class="resultPlaceTitle">
+                    <pre>
+                    {{consoleResult}}
+                    </pre>
+                  </div>
                 </div>
               </div>
             </el-tab-pane>
