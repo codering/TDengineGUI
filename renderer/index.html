@@ -121,7 +121,7 @@
           <el-tabs v-model="activeTab" type="border-card" class="mainTab"  @tab-click="handleSwichTab">
             <el-tab-pane label="超级表" class="tablePage" name="1">
               <el-container class="tableWrapper">
-                <el-aside class="mainAside" width="200px">
+                <el-aside class="mainAside" width="300px">
                   <div v-loading="loadingSurperList">
                     <!-- 超级表列表 -->
                     <el-table
@@ -132,7 +132,7 @@
                     style="width: 100%">
                     <el-table-column
                       label="超级表名"
-                      width="180">
+                      width="280">
                       <template slot="header" slot-scope="scope">   
                         <span>超级表名</span>
                         <div class="iconWrapper">
@@ -294,7 +294,7 @@
             </el-tab-pane>
             <el-tab-pane label="表" class="tablePage" name="2">
               <el-container class="tableWrapper">
-                <el-aside class="mainAside" width="200px">
+                <el-aside class="mainAside" width="300px">
                   <div v-loading="loadingTableList">
                     <!-- 表列表 -->
                     <el-table
@@ -305,7 +305,7 @@
                     style="width: 100%">
                       <el-table-column
                         label="表名"
-                        width="180">
+                        width="280">
                         <template slot="header" slot-scope="scope">   
                           <span>表名</span>
                           <div class="iconWrapper"> 
@@ -462,10 +462,16 @@
             </el-tab-pane>
             <el-tab-pane label="控制台" name="3">
               <div class="consoleWrapper">
-                <el-input placeholder="请输入内容" v-model="consoleInput">
-                  <template slot="prepend">SQL:</template>
-                  <el-button slot="append" icon="el-icon-s-promotion" @click="sendSQL"></el-button>
-                </el-input>
+                <el-row :gutter="20">
+                  <el-col :span="21">
+                    <el-input type="textarea" placeholder="请输入内容" v-model="consoleInput">
+                      <template slot="prepend">SQL:</template>
+                    </el-input>
+                  </el-col>
+                  <el-col :span="2">
+                    <el-button icon="el-icon-s-promotion" @click="sendSQL" style="width: 100%;"></el-button>
+                  </el-col>
+                </el-row>
                 <div class="resultPlace">
                   <!-- <el-input :rows='1000' type="textarea" placeholder="运行结果" v-model="consoleResult" :disabled="true"></el-input> -->
                   <div  style="height:100%;overflow-y:auto" class="resultPlaceTitle">
