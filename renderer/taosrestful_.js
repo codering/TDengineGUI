@@ -2,9 +2,12 @@ const axios = require('axios')
 
 module.exports = {
    async sendRequest(sqlStr, payload){
+      return await this.sendRequestWithDB("",sqlStr, payload);
+   },
+   async sendRequestWithDB(db, sqlStr, payload){
     // console.log(sqlStr)
     try {   
-        let res = await axios.post(`http://${payload.ip}:${payload.port}/rest/sql`, sqlStr, {
+        let res = await axios.post(`http://${payload.ip}:${payload.port}/rest/sql/${db}`, sqlStr, {
             auth: {
             username: payload.user,
             password: payload.password
@@ -16,7 +19,7 @@ module.exports = {
             // console.log(res.data.rows)
             // console.log(res.data.head)
             let head  = res.data.head
-            let resData = res.data.data.map(item => Object.fromEntries(head.map((a,b)=>[a,item[b]])))
+            let resData = (res.data?.data || []).map(item => Object.fromEntries(head.map((a,b)=>[a,item[b]])));
             return  {'res':true,'count':res.data.rows,'data':resData}
         }else{
             return {'res':false,'msg':res.data.desc,'code':res.data.code}
@@ -29,7 +32,6 @@ module.exports = {
         }
         
     }
-
    },
    showDatabases(payload){
         return this.sendRequest('SHOW DATABASES', payload)
@@ -232,9 +234,7 @@ module.exports = {
    },
    rawSqlWithDB(sqlStr,dbName,payload){
         // let dbN = dbName ? dbName : this.database
-        return this.sendRequest(`USE ${dbName}`,payload).then(a =>{
-            return this.sendRequest(sqlStr,payload)
-        })
+        return this.sendRequestWithDB(dbName, sqlStr,payload)
     }
 }
 
